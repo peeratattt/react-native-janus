@@ -323,13 +323,25 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
     }
   };
 
-  muteAudio() {}
+  muteAudio() {
+    this.stream.getAudioTracks()[0].enabled = false
+  }
 
-  unmuteAudio() {}
+  unmuteAudio() {
+    this.stream.getAudioTracks()[0].enabled = true
+  }
 
-  closeVideo() {}
+  closeVideo() {
+    this.stream.getVideoTracks()[0].enabled = false
+  }
 
-  openVideo() {}
+  openVideo() {
+    this.stream.getVideoTracks()[0].enabled = true
+  }
+
+  switchCamera() {
+    this.stream._tracks[1]._switchCamera()
+  }
 
   /**
    *
@@ -390,6 +402,7 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
   publish = async (stream, audio = true, video = true) => {
     try {
       console.log("joined to room.");
+      this.stream = stream
 
       this.pc.addStream(stream);
 
