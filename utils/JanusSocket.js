@@ -1,4 +1,4 @@
-import JanusPlugin from './JanusPlugin';
+// import JanusPlugin from './JanusPlugin';
 import JanusUtils from './JanusUtils';
 
 export default class JanusSocket {
