@@ -323,6 +323,10 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
     }
   };
 
+  isAudioMuted() {
+    return !this.stream.getAudioTracks()[0].enabled
+  }
+
   muteAudio() {
     this.stream.getAudioTracks()[0].enabled = false
   }
@@ -331,11 +335,15 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
     this.stream.getAudioTracks()[0].enabled = true
   }
 
-  closeVideo() {
+  isVideoMuted() {
+    return !this.stream.getVideoTracks()[0].enabled
+  }
+
+  muteVideo() {
     this.stream.getVideoTracks()[0].enabled = false
   }
 
-  openVideo() {
+  unmuteVideo() {
     this.stream.getVideoTracks()[0].enabled = true
   }
 
@@ -571,25 +579,34 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
     }
   };
 
-  create = () => {
+  create = async (room, description = '') => {
     try {
-      
+      const response = await this.sendAsync({
+        request: 'create',
+        room,
+        description,
+        publishers: 1000,
+        audiolevel_event: true,
+        audio_level_average: 40,
+        audio_active_packets: 50
+      })
+      return response
     } catch (error) {
-      
+      console.error('[create][error]: ', error)
     }
-  };
+  }
 
   exists = async (room) => {
     try {
       const response = await this.sendAsync({
         request: 'exists',
         room,
-      });
+      })
       return response
     } catch (error) {
       console.error('[exists][error]: ', error)
     }
-  };
+  }
 
   destroy = () => {};
 
@@ -600,12 +617,12 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
       const response = await this.sendAsync({
         request: 'listparticipants',
         room,
-      });
+      })
       return response
     } catch (error) {
       console.error('[listParticipants][error]: ', error)
     }
-  };
+  }
 
   update = () => {};
 }
