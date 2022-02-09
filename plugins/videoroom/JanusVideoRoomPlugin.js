@@ -579,13 +579,13 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
     }
   };
 
-  exists = async () => {
+  exists = async (room) => {
     try {
-      const existsResponse = await this.sendAsync({
+      const response = await this.sendAsync({
         request: 'exists',
-        room: this.roomID,
+        room,
       });
-      return existsResponse
+      return response
     } catch (error) {
       console.error('[exists][error]: ', error)
     }
@@ -597,9 +597,13 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
 
   listParticipants = async () => {
     try {
-      
+      const response = await this.sendAsync({
+        request: 'listparticipants',
+        room,
+      });
+      return response
     } catch (error) {
-      
+      console.error('[listParticipants][error]: ', error)
     }
   };
 
