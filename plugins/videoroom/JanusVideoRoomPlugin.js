@@ -571,15 +571,37 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
     }
   };
 
-  create = ({}) => {};
+  create = () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  };
 
-  exists = () => {};
+  exists = async () => {
+    try {
+      const existsResponse = await this.sendAsync({
+        request: 'exists',
+        room: this.roomID,
+      });
+      return existsResponse
+    } catch (error) {
+      console.error('[exists][error]: ', error)
+    }
+  };
 
   destroy = () => {};
 
   listAll = () => {};
 
-  listParticipants = () => {};
+  listParticipants = async () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  };
 
   update = () => {};
 }
