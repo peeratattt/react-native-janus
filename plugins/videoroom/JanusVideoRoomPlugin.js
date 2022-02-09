@@ -595,7 +595,7 @@ export default class JanusVideoRoomPlugin extends JanusPlugin {
 
   listAll = () => {};
 
-  listParticipants = async () => {
+  listParticipants = async (room) => {
     try {
       const response = await this.sendAsync({
         request: 'listparticipants',
